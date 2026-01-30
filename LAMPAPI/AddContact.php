@@ -45,6 +45,9 @@
 		$stmt = $conn->prepare("INSERT into Contacts (firstName,lastName,phone,email) VALUES(?,?,?,?)");
 		$stmt->bind_param("ssss", $firstName, $lastName, $phone, $email);
 		$stmt->execute();
+
+		$id = $conn->insert_id;
+		
 		$stmt->close();
 		$conn->close();
 

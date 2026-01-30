@@ -33,7 +33,8 @@
     		$resultsArray[] = [ "firstName" => $row["firstName"],
         					    "lastName" => $row["lastName"],
         					    "phone" => $row["phone"],
-        						"email" => $row["email"] ];
+        						"email" => $row["email"],
+								"userId" => $row["userId"] ];
 		}
 
 		if (count($resultsArray) === 0) 

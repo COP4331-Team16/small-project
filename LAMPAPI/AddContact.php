@@ -18,7 +18,7 @@
 		$firstName = trim($inData['firstName'] ?? '');
 		$lastName = trim($inData['lastName'] ?? '');
 		$phone = trim($inData['phone'] ?? '');
-		$email = $inData['email'] ?? '';
+		$email = trim($inData['email'] ?? '');
 
 		if($firstName === '' || $lastName === '' || $phone === '' || $email === '') {
 			returnWithError("Missing required fields");
@@ -48,7 +48,7 @@
 		$stmt->close();
 		$conn->close();
 
-		returnWithInfo("Contact added successfully");
+		returnWithInfo($firstName, $lastName, $id, $phone, $email);
 	}
 
 	function getRequestInfo()
@@ -64,12 +64,12 @@
 	
 	function returnWithError($err)
 	{
-		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+		$retValue = '{"id":0,"firstName":"","lastName":"","phone":"","email":"","error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
-	function returnWithInfo( $firstName, $lastName, $id )
+	function returnWithInfo( $firstName, $lastName, $id, $phone, $email )
 	{
-		$retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
+		$retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","phone":"' . $phone . '","email":"' . $email . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
 	

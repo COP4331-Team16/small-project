@@ -19,9 +19,8 @@
 		$lastName = trim($inData['lastName'] ?? '');
 		$phone = trim($inData['phone'] ?? '');
 		$email = $inData['email'] ?? '';
-		$userId = $inData['userId'] ?? null;
 
-		if($firstName === '' || $lastName === '' || $phone === '' || $email === '' || !$userId || !is_numeric($userId))
+		if($firstName === '' || $lastName === '' || $phone === '' || $email === '')
 		{
 			returnWithError("Missing required fields");
 			$conn->close();
@@ -29,8 +28,8 @@
 		}
 
 
-		$stmt = $conn->prepare("SELECT ID FROM Contacts WHERE userId = ?");
-		$stmt->bind_param("i", $inData['userId']);
+		$stmt = $conn->prepare("SELECT userId FROM Contacts WHERE phone = ?");
+		$stmt->bind_param("s", $phone);
 		$stmt->execute();
 		$result = $stmt->get_result();
 
@@ -42,6 +41,9 @@
     		exit;
 		}
 
+		$row = $result->fetch_assoc();
+		$userId = $row['userId'];
+		
 		$stmt->close();
 
 

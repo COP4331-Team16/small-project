@@ -54,7 +54,7 @@
 		if( $stmt->execute() )
 		{
 			$id = $conn->insert_id;
-			returnWithInfo( $firstName, $lastName, $id );
+			returnWithInfo( $firstName, $lastName, $id, $login );
 		}
 		else
 		{

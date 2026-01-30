@@ -31,7 +31,7 @@
 		}
 
 		// Check if user already exists
-		$stmt = $conn->prepare("SELECT ID FROM Users WHERE Login = ?");
+		$stmt = $conn->prepare("SELECT userId FROM Users WHERE Login = ?");
 		$stmt->bind_param("s", $login);
 		$stmt->execute();
 		$result = $stmt->get_result();
@@ -77,13 +77,13 @@
     
 	function returnWithError( $err )
 	{
-		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+		$retValue = '{"id":0,"firstName":"","lastName":"","login":"","error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
     
-	function returnWithInfo( $firstName, $lastName, $id )
+	function returnWithInfo( $firstName, $lastName, $id, $login )
 	{
-		$retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
+		$retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","login":"' . $login . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
     

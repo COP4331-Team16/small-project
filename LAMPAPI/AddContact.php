@@ -27,7 +27,7 @@
 		}
 
 		// Check if user already exists
-		$stmt = $conn->prepare("SELECT ID FROM Contacts WHERE phone = ?");
+		$stmt = $conn->prepare("SELECT userId FROM Contacts WHERE phone = ?");
 		$stmt->bind_param("s", $phone);
 		$stmt->execute();
 		$result = $stmt->get_result();

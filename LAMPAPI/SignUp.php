@@ -74,13 +74,13 @@
     
 	function returnWithError( $err )
 	{
-		$retValue = '{"id":0,"firstName":"","lastName":"","login":"","error":"' . $err . '"}';
+		$retValue = '{"userId":0,"firstName":"","lastName":"","login":"","error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
     
-	function returnWithInfo( $firstName, $lastName, $id, $login )
+	function returnWithInfo( $firstName, $lastName, $userId, $login )
 	{
-		$retValue = '{"id":' . $userId . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","login":"' . $login . '","error":""}';
+		$retValue = '{"userId":' . $userId . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","login":"' . $login . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
     

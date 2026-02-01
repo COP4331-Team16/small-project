@@ -1,16 +1,13 @@
-
 <?php
 
 	header('Content-Type: application/json');
 	$inData = getRequestInfo();
     
-	$id = 0;
+	$userId = 0;
 	$firstName = "";
 	$lastName = "";
 
-	// needs to be updated with correct database info!!!!!
-
-	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");     
+	$conn = new mysqli("localhost", "user", "password", "database");     
 
 	if( $conn->connect_error )
 	{
@@ -31,7 +28,7 @@
 		}
 
 		// Check if user already exists
-		$stmt = $conn->prepare("SELECT userId FROM Users WHERE Login = ?");
+		$stmt = $conn->prepare("SELECT userId FROM Users WHERE login = ?");
 		$stmt->bind_param("s", $login);
 		$stmt->execute();
 		$result = $stmt->get_result();
@@ -48,13 +45,13 @@
 		// Hash the password and insert new user
 		$passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-		$stmt = $conn->prepare("INSERT INTO Users (firstName, lastName, Login, Password) VALUES (?, ?, ?, ?)");
+		$stmt = $conn->prepare("INSERT INTO Users (firstName, lastName, login, password) VALUES (?, ?, ?, ?)");
 		$stmt->bind_param("ssss", $firstName, $lastName, $login, $passwordHash);
 
 		if( $stmt->execute() )
 		{
-			$id = $conn->insert_id;
-			returnWithInfo( $firstName, $lastName, $id, $login );
+			$userId = $conn->insert_id;
+			returnWithInfo( $firstName, $lastName, $userId, $login );
 		}
 		else
 		{
@@ -83,7 +80,7 @@
     
 	function returnWithInfo( $firstName, $lastName, $id, $login )
 	{
-		$retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","login":"' . $login . '","error":""}';
+		$retValue = '{"id":' . $userId . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","login":"' . $login . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
     

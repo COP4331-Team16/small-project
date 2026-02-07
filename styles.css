@@ -1,0 +1,80 @@
+﻿body 
+{
+    background-image: url("../images/blurred_background.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: #99ccff;
+}
+
+h1 
+{
+    font-size: 40px;
+    width: 100%;
+    text-align: center;
+    font-family: 'Ubuntu', sans-serif;
+    color: #FFFFFF;
+}
+
+.login-container
+{
+    font-size: 30px;
+    border-radius: 10px;
+    width: 70%;
+    padding-top: 1%;
+    padding-bottom: 2%;
+    background-color: #03254872;
+    display: block;
+    margin: 0 auto;
+}
+
+.buttons
+{
+    font-size: 30px;
+    border-radius: 5px;
+    border: 0px;
+    width: 25%;
+    font-family: 'Ubuntu', sans-serif;
+    color: #000420;
+    display: block;
+    margin: 0 auto;
+}
+
+.buttons:hover{
+    background-color: #ffffff6b;
+    color: #FFFFFF;
+}
+
+#loginName
+{
+	font-size: 30px;
+    border: 0px;
+}
+#loginPassword
+{
+	font-size: 30px;
+    border: 0px;
+}
+
+input[type="text"],input[type="password"]{
+    border-radius: 5px;
+    text-align: center;
+    width: 80%;
+    margin-left: 10%;
+    margin-bottom: 2%;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+#inner-title{
+    display: inline-block;
+    font-size: 0.8em;
+    width: 90%;
+    text-align: center;
+    margin-left: 5%;
+    margin-bottom: 2%;
+    font-family: 'Ubuntu', sans-serif;
+    color: #000420;
+}

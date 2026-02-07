@@ -3,23 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
-    <link rel="styles" href="styles.css">
+    <title>Login</title>
+    <link href="css/styles.css" rel="stylesheet">	
 </head>
 <body>
+
+    <h1 id="title">Team 16</h1>
+
     <div class="login-container">
-        <h1>Login</h1>
-        <form action="/login" method="POST">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit">Log In</button>
-        </form>
+        <span id="inner-title">LOG IN</span> <!-- SIGN UP -->
+        <input type="text" id="loginName" placeholder="Username" /><br />
+        <input type="password" id="loginPassword" placeholder="Password"/><br />
+        <button type="button" id="loginButton" class="buttons" onclick="login();"> Login </button>
+        <span id="loginResult"></span>
     </div>
 </body>
 </html>

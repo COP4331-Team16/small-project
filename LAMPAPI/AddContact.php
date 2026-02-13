@@ -1,4 +1,11 @@
 <?php
+	require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+	use Dotenv\Dotenv;
+
+	$dotenv = Dotenv::createImmutable(dirname(__DIR__));
+	$dotenv->load();
+
 	$inData = getRequestInfo();
 	
 	$firstName = "";
@@ -7,7 +14,7 @@
 	$email = "";
 
 
-	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
+	$conn = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_NAME']);
 	if ($conn->connect_error) 
 	{
 		returnWithError($conn->connect_error);
@@ -15,7 +22,7 @@
 	else
 	{
 		// Get and validate input
-		$userId = intval($inData['userId'] ?? 0);  // <-- MISSING: Need to get userId from input
+		$userId = intval($inData['userId'] ?? 0);  
 		$firstName = trim($inData['firstName'] ?? '');
 		$lastName = trim($inData['lastName'] ?? '');
 		$phone = trim($inData['phone'] ?? '');
@@ -29,7 +36,7 @@
 		}
 
 		// Check if THIS USER already has a contact with this phone
-		$stmt = $conn->prepare("SELECT contactID FROM Contacts WHERE phone = ? AND userId = ?");  // <-- FIXED: Use contactID and userId (camelCase)
+		$stmt = $conn->prepare("SELECT contactID FROM Contacts WHERE phone = ? AND userId = ?");  
 		$stmt->bind_param("si", $phone, $userId);
 		$stmt->execute();
 		$result = $stmt->get_result();
@@ -45,7 +52,7 @@
 		$stmt->close();
 
 		// Insert with camelCase column names
-		$stmt = $conn->prepare("INSERT INTO Contacts (firstName, lastName, phone, email, userId) VALUES(?,?,?,?,?)");  // <-- FIXED: camelCase columns
+		$stmt = $conn->prepare("INSERT INTO Contacts (firstName, lastName, phone, email, userId) VALUES(?,?,?,?,?)");  
 		$stmt->bind_param("ssssi", $firstName, $lastName, $phone, $email, $userId);
 		$stmt->execute();
 

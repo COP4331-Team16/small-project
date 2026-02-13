@@ -1,11 +1,17 @@
 <?php
+	require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+	use Dotenv\Dotenv;
+
+	$dotenv = Dotenv::createImmutable(dirname(__DIR__));
+	$dotenv->load();
 
 	$inData = getRequestInfo();
 	
 	$searchResults = "";
 	$searchCount = 0;
 
-	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
+	$conn = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_NAME']);
 	if ($conn->connect_error) 
 	{
 		returnWithError( $conn->connect_error );
@@ -31,30 +37,32 @@
 			exit;
 		}
 		
-		$stmt = $conn->prepare("SELECT ID, FirstName, LastName, Phone, Email, UserID 
+		$stmt = $conn->prepare("SELECT contactID, firstName, lastName, phone, email, userId 
 								FROM Contacts 
-								WHERE UserID = ? 
-								AND (LOWER(FirstName) LIKE LOWER(?) 
-									OR LOWER(LastName) LIKE LOWER(?) 
-									OR Phone LIKE ? 
-									OR Email LIKE ?)");
+								WHERE userId = ? 
+								AND (LOWER(firstName) LIKE LOWER(?) 
+									OR LOWER(lastName) LIKE LOWER(?) 
+									OR phone LIKE ? 
+									OR email LIKE ?)");
 
 		$searchPattern = "%" . $searchTerm . "%";
 		
 		$stmt->bind_param("issss", $userId, $searchPattern, $searchPattern, $searchPattern, $searchPattern);
 		$stmt->execute();
 		
+		$result = $stmt->get_result();
+
 		$resultsArray = [];
 
 		while($row = $result->fetch_assoc()) 
 		{
     		$resultsArray[] = [
-				"id" => $row["ID"],
-				"firstName" => $row["FirstName"],
-				"lastName" => $row["LastName"],
-				"phone" => $row["Phone"],
-				"email" => $row["Email"],
-				"userId" => $row["UserID"]
+				"id" => $row["contactID"],
+				"firstName" => $row["firstName"],
+				"lastName" => $row["lastName"],
+				"phone" => $row["phone"],
+				"email" => $row["email"],
+				"userId" => $row["userId"]
 			];
 		}
 

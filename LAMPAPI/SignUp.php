@@ -1,5 +1,11 @@
 
 <?php
+	require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+	use Dotenv\Dotenv;
+
+	$dotenv = Dotenv::createImmutable(dirname(__DIR__));
+	$dotenv->load();
 
 	header('Content-Type: application/json');
 	$inData = getRequestInfo();
@@ -10,7 +16,7 @@
 
 	// needs to be updated with correct database info!!!!!
 
-	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");     
+	$conn = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_NAME']);     
 
 	if( $conn->connect_error )
 	{

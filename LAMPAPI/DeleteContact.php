@@ -9,20 +9,20 @@
 	}
 	else
 	{
-		$contactId = $inData['contactId'] ?? null;
+		$contactID = $inData['contactID'] ?? null;
 		$userId = $inData['userId'] ?? null;
 
 		// Validate input
-		if (!$contactId || !is_numeric($contactId) || !$userId || !is_numeric($userId))
+		if (!$contactID || !is_numeric($contactID) || !$userId || !is_numeric($userId))
 		{
 			$conn->close();
-			returnWithError("Invalid or missing contactId or userId");
+			returnWithError("Invalid or missing contactID or userId");
 			exit;
 		}
 
 		// Check if contact exists AND belongs to this user (security check)
-		$stmt = $conn->prepare("SELECT ID FROM Contacts WHERE ID = ? AND UserID = ?");
-		$stmt->bind_param("ii", $contactId, $userId);
+		$stmt = $conn->prepare("SELECT contactID FROM Contacts WHERE contactID = ? AND userId = ?");
+		$stmt->bind_param("ii", $contactID, $userId);
 		$stmt->execute();
 		$result = $stmt->get_result();
 
@@ -37,13 +37,13 @@
 		$stmt->close();
 
 		// Delete the specific contact
-		$stmt = $conn->prepare("DELETE FROM Contacts WHERE ID = ? AND UserID = ?");
-		$stmt->bind_param("ii", $contactId, $userId);
+		$stmt = $conn->prepare("DELETE FROM Contacts WHERE contactID = ? AND userId = ?");
+		$stmt->bind_param("ii", $contactID, $userId);
 		$stmt->execute();
 		$stmt->close();
 		$conn->close();
 
-		returnWithInfo("Contact deleted successfully", $contactId);
+		returnWithInfo("Contact deleted successfully", $contactID);
 	}
 
 	function getRequestInfo()
@@ -70,7 +70,7 @@
 		sendResultInfoAsJson(json_encode([
 			"success" => true,
 			"message" => $message,
-			"contactId" => $id,
+			"contactID" => $id,
 			"error" => ""
 		]));
 	}

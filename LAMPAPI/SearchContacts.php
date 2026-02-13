@@ -12,29 +12,50 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("SELECT * from Contacts 
-								WHERE LOWER(firstName) LIKE LOWER(?) 
-								OR LOWER(lastName) LIKE LOWER(?) 
-								OR phone LIKE ? 
-								OR email LIKE ?");
+		// Get userId and search term
+		$userId = intval($inData['userId'] ?? 0);
+		$searchTerm = trim($inData['search'] ?? '');
 
+		// Validate input
+		if ($userId === 0)
+		{
+			returnWithError("Missing or invalid userId");
+			$conn->close();
+			exit;
+		}
 
-		$searchTerm = "%" . $inData["search"] . "%";
+		if ($searchTerm === '')
+		{
+			returnWithError("Missing search term");
+			$conn->close();
+			exit;
+		}
 		
-		$stmt->bind_param("ssss", $searchTerm, $searchTerm, $searchTerm, $searchTerm);
+		$stmt = $conn->prepare("SELECT ID, FirstName, LastName, Phone, Email, UserID 
+								FROM Contacts 
+								WHERE UserID = ? 
+								AND (LOWER(FirstName) LIKE LOWER(?) 
+									OR LOWER(LastName) LIKE LOWER(?) 
+									OR Phone LIKE ? 
+									OR Email LIKE ?)");
+
+		$searchPattern = "%" . $searchTerm . "%";
+		
+		$stmt->bind_param("issss", $userId, $searchPattern, $searchPattern, $searchPattern, $searchPattern);
 		$stmt->execute();
-		
-		$result = $stmt->get_result();
 		
 		$resultsArray = [];
 
 		while($row = $result->fetch_assoc()) 
 		{
-    		$resultsArray[] = [ "firstName" => $row["firstName"],
-        					    "lastName" => $row["lastName"],
-        					    "phone" => $row["phone"],
-        						"email" => $row["email"],
-								"userId" => $row["userId"] ];
+    		$resultsArray[] = [
+				"id" => $row["ID"],
+				"firstName" => $row["FirstName"],
+				"lastName" => $row["LastName"],
+				"phone" => $row["Phone"],
+				"email" => $row["Email"],
+				"userId" => $row["UserID"]
+			];
 		}
 
 		if (count($resultsArray) === 0) 

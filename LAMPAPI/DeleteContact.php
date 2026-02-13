@@ -1,7 +1,7 @@
 <?php
 	$inData = getRequestInfo();
 
-	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
+	$conn = new mysqli("localhost", "user", "password", "database");
 	if ($conn->connect_error)
 	{
 		returnWithError($conn->connect_error);
@@ -9,42 +9,41 @@
 	}
 	else
 	{
+		$contactId = $inData['contactId'] ?? null;
+		$userId = $inData['userId'] ?? null;
 
-		
-	$userId = $inData['userId'] ?? null;
+		// Validate input
+		if (!$contactId || !is_numeric($contactId) || !$userId || !is_numeric($userId))
+		{
+			$conn->close();
+			returnWithError("Invalid or missing contactId or userId");
+			exit;
+		}
 
-	// Validate input
-	if (!$userId || !is_numeric($userId))
-	{
-		$conn->close();
-		returnWithError("Invalid or missing userId");
-		exit;
-	}
+		// Check if contact exists AND belongs to this user (security check)
+		$stmt = $conn->prepare("SELECT ID FROM Contacts WHERE ID = ? AND UserID = ?");
+		$stmt->bind_param("ii", $contactId, $userId);
+		$stmt->execute();
+		$result = $stmt->get_result();
 
-	// Check if contact exists
-	$stmt = $conn->prepare("SELECT userId FROM Contacts WHERE userId = ?");
-	$stmt->bind_param("i", $userId);
-	$stmt->execute();
-	$result = $stmt->get_result();
+		if ($result->num_rows === 0)
+		{
+			$stmt->close();
+			$conn->close();
+			returnWithError("Contact not found or access denied");
+			exit;
+		}
 
-	if ($result->num_rows === 0)
-	{
+		$stmt->close();
+
+		// Delete the specific contact
+		$stmt = $conn->prepare("DELETE FROM Contacts WHERE ID = ? AND UserID = ?");
+		$stmt->bind_param("ii", $contactId, $userId);
+		$stmt->execute();
 		$stmt->close();
 		$conn->close();
-		returnWithError("Contact not found");
-		exit;
-	}
 
-	$stmt->close();
-
-	// Delete contact
-	$stmt = $conn->prepare("DELETE FROM Contacts WHERE userId = ?");
-	$stmt->bind_param("i", $userId);
-	$stmt->execute();
-	$stmt->close();
-	$conn->close();
-
-	returnWithInfo("Contact deleted successfully", $userId);
+		returnWithInfo("Contact deleted successfully", $contactId);
 	}
 
 	function getRequestInfo()
@@ -61,17 +60,17 @@
 	function returnWithError($err)
 	{
 		sendResultInfoAsJson(json_encode([
-			"success" => "",
-			"user" => "",
+			"success" => false,
 			"error" => $err
 		]));
 	}
 
-	function returnWithInfo($message,$id)
+	function returnWithInfo($message, $id)
 	{
 		sendResultInfoAsJson(json_encode([
-			"success" => $message,
-			"user" => $id,
+			"success" => true,
+			"message" => $message,
+			"contactId" => $id,
 			"error" => ""
 		]));
 	}

@@ -20,18 +20,19 @@
 		$phone = trim($inData['phone'] ?? '');
 		$email = trim($inData['email'] ?? '');
 
-		if($firstName === '' || $lastName === '' || $phone === '' || $email === '') {
+		if($userId === 0 || $firstName === '' || $lastName === '' || $phone === '' || $email === '')
+		{
 			returnWithError("Missing required fields");
 			$conn->close();
 			exit;
 		}
 
 		// Check if user already exists
-		$stmt = $conn->prepare("SELECT userId FROM Contacts WHERE phone = ?");
-		$stmt->bind_param("s", $phone);
+		$stmt = $conn->prepare("SELECT ID FROM Contacts WHERE Phone = ? AND UserID = ?");
+		$stmt->bind_param("si", $phone, $userId);
 		$stmt->execute();
 		$result = $stmt->get_result();
-
+		
 		if( $result->num_rows > 0 )
 		{
 			$stmt->close();
@@ -42,8 +43,8 @@
 
 		$stmt->close();
 
-		$stmt = $conn->prepare("INSERT into Contacts (firstName,lastName,phone,email) VALUES(?,?,?,?)");
-		$stmt->bind_param("ssss", $firstName, $lastName, $phone, $email);
+		$stmt = $conn->prepare("INSERT INTO Contacts (FirstName, LastName, Phone, Email, UserID) VALUES(?,?,?,?,?)");
+		$stmt->bind_param("ssssi", $firstName, $lastName, $phone, $email, $userId);
 		$stmt->execute();
 
 		$id = $conn->insert_id;
@@ -53,6 +54,7 @@
 
 		returnWithInfo($firstName, $lastName, $id, $phone, $email);
 	}
+
 
 	function getRequestInfo()
 	{

@@ -1,8 +1,14 @@
 <?php
+	require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+	use Dotenv\Dotenv;
+
+	$dotenv = Dotenv::createImmutable(dirname(__DIR__));
+	$dotenv->load();
 
         $inData = getRequestInfo();
 
-        $conn = new mysqli("localhost", "user", "password", "database");
+        $conn = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_NAME']);
         if( $conn->connect_error )
         {
                 returnWithError( $conn->connect_error );

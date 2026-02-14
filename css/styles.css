@@ -1,13 +1,13 @@
-﻿body 
+body 
 {
-    background-image: url("../images/blurred_background.jpg");
+    background-image: url("../images/login_bg.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     margin: 0;
     height: 100vh;
     width: 100vw;
-    background-color: #99ccff;
+    background-color: #01515a;
 }
 
 h1 
@@ -26,7 +26,7 @@ h1
     width: 70%;
     padding-top: 1%;
     padding-bottom: 2%;
-    background-color: #03254872;
+    background-color: #03324872;
     display: block;
     margin: 0 auto;
 }
@@ -38,13 +38,14 @@ h1
     border: 0px;
     width: 25%;
     font-family: 'Ubuntu', sans-serif;
-    color: #000420;
+    color: #b8e2e2;
+    background-color: #00262fd1;
     display: block;
     margin: 0 auto;
 }
 
 .buttons:hover{
-    background-color: #ffffff6b;
+    background-color: #054e5e8e;
     color: #FFFFFF;
 }
 

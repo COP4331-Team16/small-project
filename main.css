@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body 
+{
+    background-image: url("../images/main_bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: #9cc7d7;
+}
+header {
+    background-color: #9cc7d7; 
+    padding-top: 2%;
+    padding-bottom: 1.5rem;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 0.5%;
+    font-size: 75%;
+    text-align: center;
+    background-color: #045b80;
+    color: #b8e2e2;
+    clear: both;
+    z-index: 4;
+}
+footer a { 
+    color: #b8e2e2;
+}
+footer a:hover { 
+    color: #ffffff;
+}
+footer a:visited { 
+    color: #b8e2e2;
+}
+
+h1 
+{
+    font-size: 40px;
+    width: 100%;
+    text-align: center;
+    font-family: 'Ubuntu', sans-serif;
+    color: #FFFFFF;
+}
+
+.nav {
+    background-color: #045b80;
+    text-align: center;
+    padding: 1%;
+}
+.nav a {
+    color: #b8e2e2;
+    font-family: Arial;
+    font-size: 100%;
+    text-decoration: none;
+    padding: 5%;
+}
+.nav a.active {
+    color: #e8ffff;
+    text-decoration: underline;
+}
+.nav a:hover {
+    color: #ffffff;
+}

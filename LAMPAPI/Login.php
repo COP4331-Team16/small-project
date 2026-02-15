@@ -1,10 +1,10 @@
 <?php
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+	require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-use Dotenv\Dotenv;
+	use Dotenv\Dotenv;
 
-$dotenv = Dotenv::createImmutable(dirname(__DIR__));
-$dotenv->load();
+	$dotenv = Dotenv::createImmutable(dirname(__DIR__));
+	$dotenv->load();
 
         $inData = getRequestInfo();
 

@@ -1,0 +1,159 @@
+﻿body 
+{
+    background-image: url("../images/login_bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: #01515a;
+    overflow: hidden;
+}
+
+h1 
+{
+    font-size: 40px;
+    width: 100%;
+    text-align: center;
+    font-family: 'Ubuntu', sans-serif;
+    color: #FFFFFF;
+}
+
+
+#loginName
+{
+	font-size: 30px;
+    border: 0px;
+}
+#loginPassword
+{
+	font-size: 30px;
+    border: 0px;
+}
+.form {
+    border-radius: 17px;
+    position: relative;
+    background-color: #01515a;
+    max-width: 350px;
+    margin: 0 auto 100px;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    overflow: hidden;
+    height: 360px;
+    transition: .6s;
+}
+input[type="text"],input[type="password"]{
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    margin-bottom: 2%;
+    font-family: 'Ubuntu', sans-serif;
+}
+.input-form {
+    transition: .4s;
+    position: absolute;
+}
+.input-field:valid {
+    border: 2px solid #009345;
+}
+
+.input-field:invalid {
+    border: 2px solid red;
+}
+.input-field:invalid:required {
+    background-image: white;
+}
+
+.buttons
+{
+    font-size: 30px;
+    border-radius: 5px;
+    border: 0px;
+    width: 100%;
+    font-family: 'Ubuntu', sans-serif;
+    color: #b8e2e2;
+    background-color: #00262fd1;
+    display: block;
+    margin: 0 auto;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+.buttons:hover{
+    background-color: #054e5e8e;
+    color: #FFFFFF;
+}
+
+.valid {
+    color: #009345;
+}
+.invalid {
+    color: red;
+}
+#explanation,
+#explanationUser {
+    display: none;
+    color: #000;
+    position: relative;
+    bottom: 1px;
+    text-align: center;
+    font-family: 'Arial';
+}
+#explanation>p {
+    position: relative;
+    bottom: 10px;
+}
+#loginResult {
+    position: relative;
+    bottom: 175px;
+    color: rgb(203, 55, 21);
+    font-family: 'Arial';
+}
+#signup {
+    position: relative;
+    left: -500px;
+}
+#signupResult {
+    position: relative;
+    bottom: 350px;
+    color: rgb(203, 55, 21);
+    font-family: 'Arial';
+}
+
+
+/* Login/Register slider*/
+.slider {
+    width: 270px;
+    margin: auto;
+    position: relative;
+    border-radius: 30px;
+    top: -25px;
+    box-shadow: 0 0 25px 0 #001720b2, 0 5px 5px 0 #001720b2;
+}
+#btn {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 140px;
+    height: 100%;
+    background: #00262fd1;
+    border-radius: 30px;
+    transition: .4s;
+}
+.toggle-btn {
+    padding: 10px 42px;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    outline: none;
+    position: relative;
+    color: #FFFFFF;
+    font-family: 'Arial';
+    font-style: normal;
+    font-size: 12px;
+    text-transform: uppercase;
+    text-align: center;
+}

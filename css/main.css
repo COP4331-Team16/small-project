@@ -1,0 +1,237 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body 
+{
+    background-image: url("../images/main_bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: #9cc7d7;
+    overflow: hidden;
+}
+
+h1 {
+    font-size: 40px;
+    width: 100%;
+    text-align: center;
+    font-family: 'Ubuntu', sans-serif;
+    color: #FFFFFF;
+}
+
+h2 
+{
+    font-size: 32px;              /* 80% of h1 */
+    font-family: 'Ubuntu', sans-serif;
+    color: #333333;               /* Dark gray for body content */
+    margin: 30px 0 15px 0;        /* Space above and below */
+    padding-bottom: 10px;
+    border-bottom: 2px solid #333; /* Visual separation */
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+h3 
+{
+    font-size: 24px;              /* 75% of h2 */
+    font-family: 'Ubuntu', sans-serif;
+    color: #555555;               /* Medium gray */
+    margin: 20px 0 10px 0;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+p
+{
+   font-size: 16px;              /* Base size */
+    font-family: 'Ubuntu', sans-serif;
+    color: #666666;               /* Light gray for readability */
+    line-height: 1.6;             /* Comfortable reading spacing */
+    margin: 0 0 15px 0;           /* Space between paragraphs */
+    letter-spacing: 0.3px;
+}
+
+header {
+    background-color: #9cc7d7; 
+    padding-top: 2%;
+    padding-bottom: 1.5rem;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 0.5%;
+    font-size: 75%;
+    text-align: center;
+    background-color: #045b80;
+    color: #b8e2e2;
+    clear: both;
+    z-index: 4;
+}
+footer a { 
+    color: #b8e2e2;
+}
+footer a:hover { 
+    color: #ffffff;
+}
+footer a:visited { 
+    color: #b8e2e2;
+}
+
+.nav {
+    background-color: #045b80;
+    text-align: center;
+    padding: 1%;
+}
+.nav a {
+    color: #b8e2e2;
+    font-family: Arial;
+    font-size: 100%;
+    text-decoration: none;
+    text-align: center;
+    padding: 8%;
+}
+.nav a.active {
+    color: #e8ffff;
+    text-decoration: underline;
+}
+.nav a:hover {
+    color: #ffffff;
+}
+/* Logout button */
+.font {
+    color: #045b80;
+    font-family: Arial;
+    font-size: 100%;
+    background-color: #9cc7d7;
+    border-radius: 2px;
+    border: 5px solid #9cc7d7;
+    cursor: pointer;
+    text-align: center;
+    float: right;
+    top: -4px;
+    position: relative;
+    margin-right: 2%;
+}
+
+.content {
+    height: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+.accessUIDiv {
+    padding: 10px 10px;
+    text-align: center;
+    align-self: center;
+}
+
+
+
+
+.addContacts {
+    align-self: center;
+}
+
+#contacts td input {
+    border-radius: 17px;
+    font-family: 'Arial';
+    outline: 0;
+    background: #dfd7b3;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* search bar formatting */
+.search-container {
+    background: #ffffff;
+    font-family: 'Arial';
+    height: 30px;
+    width: 400px;
+    border-radius: 30px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.search-container .search-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 400px;
+    font-family: 'Arial';
+    font-weight: 500;
+    font-size: 16px;
+}
+
+/* table formatting */
+#contactsTable {
+    display: block;
+    height: 500px;
+}
+
+table {
+    width:100%;
+    table-layout: relative;
+}
+
+.tbl-content {
+    height: 300px;
+    overflow-x: auto;
+    margin-top: 0;
+    border: 1px solid #045b80;
+}
+
+#contacts td,
+#contacts th {
+    border: 1px solid #045b80;
+}
+
+#contacts tr:hover {
+    background-color: #478fbb;
+}
+
+#contacts th {
+    padding: 20px 15px;
+    text-align: left;
+    font-family: 'Arial';
+    font-weight: 500;
+    font-size: 16px;
+    font-weight: bold;
+    color: #045b80;
+    background-color: #9cc7d7;
+    text-transform: uppercase;
+}
+
+#contacts td {
+    padding: 15px;
+    text-align: left;
+    font-family: 'Arial';
+    vertical-align: middle;
+    font-weight: 300;
+    font-size: 15px;
+    font-weight: bold;
+    color: #045b80;
+    background-color: #dfd7b3;
+}
+#contacts td span {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 100%;
+    color: #045b80;
+}

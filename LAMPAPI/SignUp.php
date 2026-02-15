@@ -1,0 +1,93 @@
+<?php
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
+
+	header('Content-Type: application/json');
+	$inData = getRequestInfo();
+    
+	$userId = 0;
+	$firstName = "";
+	$lastName = "";
+
+	$conn = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_NAME']);
+
+	if( $conn->connect_error )
+	{
+		returnWithError( $conn->connect_error );
+	}
+	else
+	{
+		// Basic input validation
+		$firstName = trim($inData['firstName'] ?? '');
+		$lastName = trim($inData['lastName'] ?? '');
+		$login = trim($inData['login'] ?? '');
+		$password = $inData['password'] ?? '';
+
+		if($firstName === '' || $lastName === '' || $login === '' || $password === '') {
+			returnWithError("Missing required fields");
+			$conn->close();
+			exit;
+		}
+
+		// Check if user already exists
+		$stmt = $conn->prepare("SELECT userId FROM Users WHERE login = ?");
+		$stmt->bind_param("s", $login);
+		$stmt->execute();
+		$result = $stmt->get_result();
+
+		if( $result->num_rows > 0 )
+		{
+			$stmt->close();
+			$conn->close();
+			returnWithError("User already exists");
+			exit;
+		}
+		$stmt->close();
+
+		// Hash the password and insert new user
+		$passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+		$stmt = $conn->prepare("INSERT INTO Users (firstName, lastName, login, password) VALUES (?, ?, ?, ?)");
+		$stmt->bind_param("ssss", $firstName, $lastName, $login, $passwordHash);
+
+		if( $stmt->execute() )
+		{
+			$userId = $conn->insert_id;
+			returnWithInfo( $firstName, $lastName, $userId, $login );
+		}
+		else
+		{
+			returnWithError("Insert failed");
+		}
+
+		$stmt->close();
+		$conn->close();
+	}
+    
+	function getRequestInfo()
+	{
+		return json_decode(file_get_contents('php://input'), true);
+	}
+
+	function sendResultInfoAsJson( $obj )
+	{
+		echo $obj;
+	}
+    
+	function returnWithError( $err )
+	{
+		$retValue = '{"userId":0,"firstName":"","lastName":"","login":"","error":"' . $err . '"}';
+		sendResultInfoAsJson( $retValue );
+	}
+    
+	function returnWithInfo( $firstName, $lastName, $userId, $login )
+	{
+		$retValue = '{"userId":' . $userId . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","login":"' . $login . '","error":""}';
+		sendResultInfoAsJson( $retValue );
+	}
+    
+?>

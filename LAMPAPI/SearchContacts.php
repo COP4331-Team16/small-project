@@ -1,10 +1,10 @@
 <?php
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+	require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-use Dotenv\Dotenv;
+	use Dotenv\Dotenv;
 
-$dotenv = Dotenv::createImmutable(dirname(__DIR__));
-$dotenv->load();
+	$dotenv = Dotenv::createImmutable(dirname(__DIR__));
+	$dotenv->load();
 
 	$inData = getRequestInfo();
 	
@@ -18,29 +18,52 @@ $dotenv->load();
 	} 
 	else
 	{
-		$stmt = $conn->prepare("SELECT * from Contacts 
-								WHERE LOWER(firstName) LIKE LOWER(?) 
-								OR LOWER(lastName) LIKE LOWER(?) 
-								OR phone LIKE ? 
-								OR email LIKE ?");
+		// Get userId and search term
+		$userId = intval($inData['userId'] ?? 0);
+		$searchTerm = trim($inData['search'] ?? '');
 
+		// Validate input
+		if ($userId === 0)
+		{
+			returnWithError("Missing or invalid userId");
+			$conn->close();
+			exit;
+		}
 
-		$searchTerm = "%" . $inData["search"] . "%";
+		if ($searchTerm === '')
+		{
+			returnWithError("Missing search term");
+			$conn->close();
+			exit;
+		}
 		
-		$stmt->bind_param("ssss", $searchTerm, $searchTerm, $searchTerm, $searchTerm);
+		$stmt = $conn->prepare("SELECT contactID, firstName, lastName, phone, email, userId 
+								FROM Contacts 
+								WHERE userId = ? 
+								AND (LOWER(firstName) LIKE LOWER(?) 
+									OR LOWER(lastName) LIKE LOWER(?) 
+									OR phone LIKE ? 
+									OR email LIKE ?)");
+
+		$searchPattern = "%" . $searchTerm . "%";
+		
+		$stmt->bind_param("issss", $userId, $searchPattern, $searchPattern, $searchPattern, $searchPattern);
 		$stmt->execute();
 		
 		$result = $stmt->get_result();
-		
+
 		$resultsArray = [];
 
 		while($row = $result->fetch_assoc()) 
 		{
-    		$resultsArray[] = [ "firstName" => $row["firstName"],
-        					    "lastName" => $row["lastName"],
-        					    "phone" => $row["phone"],
-        						"email" => $row["email"],
-								"userId" => $row["userId"] ];
+    		$resultsArray[] = [
+				"id" => $row["contactID"],
+				"firstName" => $row["firstName"],
+				"lastName" => $row["lastName"],
+				"phone" => $row["phone"],
+				"email" => $row["email"],
+				"userId" => $row["userId"]
+			];
 		}
 
 		if (count($resultsArray) === 0) 

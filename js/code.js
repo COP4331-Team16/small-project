@@ -195,3 +195,57 @@ function searchContacts()
 function showTable()
 {
 }
+
+function doSignup()
+{
+    let firstName = document.getElementById("signupFirstName").value;
+    let lastName = document.getElementById("signupLastName").value;
+    let login = document.getElementById("signupLogin").value;
+    let password = document.getElementById("signupPassword").value;
+
+    document.getElementById("signupResult").innerHTML = "";
+
+    let tmp = {firstName:firstName, lastName:lastName, login:login, password:password};
+    let jsonPayload = JSON.stringify(tmp);
+
+    let url = urlBase + '/AddUser.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try
+    {
+        xhr.onreadystatechange = function()
+        {
+            if(this.readyState == 4 && this.status == 200)
+            {
+                let jsonObject = JSON.parse(xhr.responseText);
+
+                if(jsonObject.error && jsonObject.error !== "")
+                {
+                    document.getElementById("signupResult").innerHTML = jsonObject.error;
+                }
+                else
+                {
+                    // Sign-up successful
+                    userId = jsonObject.userId;
+                    firstName = jsonObject.firstName;
+                    lastName = jsonObject.lastName;
+
+                    saveCookie();
+                    document.getElementById("signupResult").style.color = "green";
+                    document.getElementById("signupResult").innerHTML = "Sign-up successful! Redirecting...";
+
+                    setTimeout(() => { window.location.href = "contacts.html"; }, 1000);
+                }
+            }
+        };
+        xhr.send(jsonPayload);
+    }
+    catch(err)
+    {
+        document.getElementById("signupResult").innerHTML = err.message;
+    }
+}
+

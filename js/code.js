@@ -116,7 +116,7 @@ function addContact()
 	let tmp = {contact:newContact,userId,userId};
 	let jsonPayload = JSON.stringify( tmp );
 
-	let url = urlBase + '/addContact.' + extension;
+	let url = urlBase + '/AddContact.' + extension;
 	
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -139,7 +139,7 @@ function addContact()
 	
 }
 
-function searchContact()
+function searchContacts()
 {
 	let srch = document.getElementById("searchText").value;
 	document.getElementById("contactSearchResult").innerHTML = "";
@@ -163,16 +163,21 @@ function searchContact()
 				document.getElementById("contactSearchResult").innerHTML = "Contact(s) has been retrieved";
 				let jsonObject = JSON.parse( xhr.responseText );
 				
+				var tbody = document.getElementById("tbody");
+				tbody.innerHTML = "";
 				for( let i=0; i<jsonObject.results.length; i++ )
 				{
-					contactList += jsonObject.results[i];
-					if( i < jsonObject.results.length - 1 )
-					{
-						contactList += "<br />\r\n";
-					}
+					var row = tbody.insertRow(i);
+					var firstName = row.insertCell(0);
+					var lastName = row.insertCell(1);
+					var email = row.insertCell(2);
+					var phone = row.insertCell(3);
+
+					firstName.innerHTML = jsonObject.results[i].firstName;
+					lastName.innerHTML = jsonObject.results[i].lastName;
+					email.innerHTML = jsonObject.results[i].email;
+					phone.innerHTML = jsonObject.results[i].phone;
 				}
-				
-				document.getElementsByTagName("p")[0].innerHTML = contactList;
 			}
 		};
 		xhr.send(jsonPayload);
@@ -182,4 +187,8 @@ function searchContact()
 		document.getElementById("contactSearchResult").innerHTML = err.message;
 	}
 	
+}
+
+function showTable()
+{
 }

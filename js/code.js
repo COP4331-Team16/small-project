@@ -1,4 +1,4 @@
-const urlBase = 'http://portcall.cloud/LAMPAPI/';
+const urlBase = 'http://portcall.cloud/LAMPAPI';
 const extension = 'php';
 
 let userId = 0;

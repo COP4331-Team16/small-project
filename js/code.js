@@ -225,3 +225,122 @@ function loadContacts() {
 function showTable() {
 	loadContacts();
 }
+
+function doSignup()
+{
+    let firstName = document.getElementById("signupFirstName").value;
+    let lastName = document.getElementById("signupLastName").value;
+    let login = document.getElementById("signupLogin").value;
+    let password = document.getElementById("signupPassword").value;
+
+    document.getElementById("signupResult").innerHTML = "";
+
+    let tmp = {firstName:firstName, lastName:lastName, login:login, password:password};
+    let jsonPayload = JSON.stringify(tmp);
+
+    let url = urlBase + '/AddUser.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try
+    {
+        xhr.onreadystatechange = function()
+        {
+            if(this.readyState == 4 && this.status == 200)
+            {
+                let jsonObject = JSON.parse(xhr.responseText);
+
+                if(jsonObject.error && jsonObject.error !== "")
+                {
+                    document.getElementById("signupResult").innerHTML = jsonObject.error;
+                }
+                else
+                {
+                    // Sign-up successful
+                    userId = jsonObject.userId;
+                    firstName = jsonObject.firstName;
+                    lastName = jsonObject.lastName;
+
+                    saveCookie();
+                    document.getElementById("signupResult").style.color = "green";
+                    document.getElementById("signupResult").innerHTML = "Sign-up successful! Redirecting...";
+
+                    setTimeout(() => { window.location.href = "contacts.html"; }, 1000);
+                }
+            }
+        };
+        xhr.send(jsonPayload);
+    }
+    catch(err)
+    {
+        document.getElementById("signupResult").innerHTML = err.message;
+    }
+}
+
+function editContact(contactId) {
+    readCookie();
+
+    // Ask for confirmation before editing
+    if (!confirm("Are you sure you want to save these changes to this contact?")) {
+        return; 
+    }
+
+    let firstName = document.getElementById("firstName").value;
+    let lastName = document.getElementById("lastName").value;
+    let email = document.getElementById("email").value;
+    let phone = document.getElementById("phone").value;
+
+    document.getElementById("contactAddResult").innerHTML = "";
+
+    let tmp = {
+        contactId: contactId,
+        userId: userId,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone
+    };
+
+    let jsonPayload = JSON.stringify(tmp);
+    let url = urlBase + '/EditContact.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try {
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                try {
+                    let jsonObject = JSON.parse(xhr.responseText);
+
+                    if (!jsonObject.success) {
+                        document.getElementById("contactAddResult").innerHTML = jsonObject.error;
+                    } else {
+                        document.getElementById("contactAddResult").innerHTML = "Contact updated successfully";
+
+                        // Clear form fields
+                        document.getElementById("firstName").value = "";
+                        document.getElementById("lastName").value = "";
+                        document.getElementById("email").value = "";
+                        document.getElementById("phone").value = "";
+
+                        // Refresh table
+                        loadContacts();
+                    }
+                } catch (err) {
+                    document.getElementById("contactAddResult").innerHTML = err.message;
+                }
+            }
+        };
+
+        xhr.send(jsonPayload);
+    } catch (err) {
+        document.getElementById("contactAddResult").innerHTML = err.message;
+    }
+}
+
+
+

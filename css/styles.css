@@ -9,18 +9,22 @@
     width: 100vw;
     background-color: #01515a;
     overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: geometricPrecision;
 }
 
 h1 
 {
+    padding-top: 30px;
     font-size: 40px;
     width: 100%;
     text-align: center;
     font-family: 'Ubuntu', sans-serif;
-    color: #FFFFFF;
+    color: white;
 }
 
-
+#loginButton,
 #loginName
 {
 	font-size: 30px;
@@ -32,11 +36,12 @@ h1
     border: 0px;
 }
 .form {
+    position: absolute;
+    width: 350px;
+    left: calc(50% - 215px);
+    top: 175px;
     border-radius: 17px;
-    position: relative;
     background-color: #01515a;
-    max-width: 350px;
-    margin: 0 auto 100px;
     padding: 45px;
     text-align: center;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
@@ -48,7 +53,7 @@ input[type="text"],input[type="password"]{
     border-radius: 5px;
     text-align: center;
     position: relative;
-    width: 100%;
+    width: 75%;
     margin-bottom: 2%;
     font-family: 'Ubuntu', sans-serif;
 }
@@ -57,14 +62,14 @@ input[type="text"],input[type="password"]{
     position: absolute;
 }
 .input-field:valid {
-    border: 2px solid #009345;
+    border: 2px solid green;
 }
 
-.input-field:invalid {
-    border: 2px solid red;
+.input-field:focus:invalid {
+    border: 2px solid rgb(255, 0, 64);;
 }
 .input-field:invalid:required {
-    background-image: white;
+    background-image: yellow;
 }
 
 .buttons
@@ -72,31 +77,32 @@ input[type="text"],input[type="password"]{
     font-size: 30px;
     border-radius: 5px;
     border: 0px;
-    width: 100%;
+    width: 50%;
     font-family: 'Ubuntu', sans-serif;
     color: #b8e2e2;
     background-color: #00262fd1;
     display: block;
     margin: 0 auto;
+    margin-top: 20px;
     -webkit-transition: all 0.3 ease;
     transition: all 0.3 ease;
     cursor: pointer;
 }
 .buttons:hover{
-    background-color: #054e5e8e;
-    color: #FFFFFF;
+    background-color: #063a46d1;
+    color: white;
 }
 
 .valid {
-    color: #009345;
+    color: green;
 }
 .invalid {
-    color: red;
+    color: rgb(255, 0, 64);;
 }
 #explanation,
 #explanationUser {
     display: none;
-    color: #000;
+    color: black;
     position: relative;
     bottom: 1px;
     text-align: center;
@@ -107,22 +113,46 @@ input[type="text"],input[type="password"]{
     bottom: 10px;
 }
 #loginResult {
-    position: relative;
-    bottom: 175px;
-    color: rgb(203, 55, 21);
-    font-family: 'Arial';
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: rgb(255, 0, 64);
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 20px;
+    width: 350px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#login,
+#signup {
+    position: absolute;
+    width: 100%;
+    transition: 0.4s;
+}
+#login {
+    left: 0px;
 }
 #signup {
-    position: relative;
-    left: -500px;
+    left: 400px; 
 }
 #signupResult {
     position: relative;
     bottom: 350px;
-    color: rgb(203, 55, 21);
-    font-family: 'Arial';
+    color: rgb(255, 0, 64);
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 15px;
 }
-
+.error-message {
+    height: 75px; /* reserve space */
+    width: 350px;
+    margin-top: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 /* Login/Register slider*/
 .slider {
@@ -130,30 +160,33 @@ input[type="text"],input[type="password"]{
     margin: auto;
     position: relative;
     border-radius: 30px;
-    top: -25px;
     box-shadow: 0 0 25px 0 #001720b2, 0 5px 5px 0 #001720b2;
+    transform: translate3d(0,0,0);
+    backface-visibility: hidden;
+    will-change: transform;
 }
 #btn {
     top: 0;
-    left: 0;
+    left: 0px;
     position: absolute;
-    width: 140px;
+    width: 135px;
     height: 100%;
     background: #00262fd1;
     border-radius: 30px;
-    transition: .4s;
+    transition: 0.4s;
+    transform: translateZ(0);
 }
 .toggle-btn {
-    padding: 10px 42px;
+    padding: 10px 40px;
     cursor: pointer;
     background: transparent;
     border: 0;
     outline: none;
     position: relative;
-    color: #FFFFFF;
-    font-family: 'Arial';
+    color: white;
+    font-family: 'Ubuntu', sans-serif;;
     font-style: normal;
-    font-size: 12px;
+    font-size: 15px;
     text-transform: uppercase;
     text-align: center;
 }

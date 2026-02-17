@@ -52,7 +52,7 @@ p
     font-family: 'Ubuntu', sans-serif;
     color: #666666;               /* Light gray for readability */
     line-height: 1.6;             /* Comfortable reading spacing */
-    margin: 0 0 15px 0;           /* Space between paragraphs */
+    margin: 0;
     letter-spacing: 0.3px;
 }
 
@@ -67,7 +67,7 @@ footer {
     left: 0;
     bottom: 0;
     width: 100%;
-    padding: 0.5%;
+    padding: 5px;
     font-size: 75%;
     text-align: center;
     background-color: #045b80;
@@ -138,6 +138,7 @@ footer a:visited {
 
 
 
+
 .addContacts {
     align-self: center;
 }
@@ -167,12 +168,14 @@ footer a:visited {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    margin-left: 100px;
+    margin-bottom: 30px;
 }
 .search-container .search-input {
     background: transparent;
     border: none;
     outline: none;
-    width: 400px;
+    flex: 1;
     font-family: 'Arial';
     font-weight: 500;
     font-size: 16px;
@@ -234,4 +237,127 @@ table {
     overflow: hidden;
     font-size: 100%;
     color: #045b80;
+}
+
+
+/* Container for buttons inside a table cell */
+.table-btn-container {
+    display: flex;          /* keep buttons side by side */
+    justify-content: flex-start; /* align left, or use center/right */
+    align-items: center; 
+}
+
+/* Common table button styles */
+.table-btn {
+    padding: 3px 6px;        /* smaller padding */
+    font-size: 12px;         /* smaller font */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+    display: inline-block;
+}
+
+/* Edit button styles */
+.edit-btn {
+    background-color: #4CAF50; /* green */
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #45a049; /* darker green */
+}
+
+/* Delete button styles */
+.delete-btn {
+    background-color: #f44336; /* red */
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f; /* darker red */
+}
+
+
+
+
+/* About Page Styles */
+.about-page .Team {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.about-page .Team-Member {
+    padding: 1.5rem;
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+.about-page .Team-Member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 1rem 0;
+    background: #ddd;
+}
+
+.about-page .Team-Member h3 {
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.about-page .role {
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.about-page section {
+    margin-bottom: 3rem;
+}
+
+.about-page section h2 {
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 0.5rem;
+}
+
+.about-page .container {
+    max-width: 1200px;
+    margin: 40px auto 80px auto;
+    padding: 2rem;
+    background: #dfd7b3;
+    border-radius: 8px;
+}
+
+.about-page .features-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+}
+
+.about-page .features-list li {
+    padding: 1rem;
+    background: #e9ecef;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Allow scrolling on about page */
+body.about-page {
+    overflow-y: auto;
+    height: auto;
+    min-height: 100vh;
+}
+
+/* Allow scrolling on contacts page */
+body.contacts-page {
+    overflow-y: auto;
+    height: auto;
+    min-height: 100vh;
 }

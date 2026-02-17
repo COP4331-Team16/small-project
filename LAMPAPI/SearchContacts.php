@@ -37,7 +37,37 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 		if ($searchTerm === '')
 		{
-			returnWithError("Missing search term");
+			// Return all contacts for this user
+			$stmt = $conn->prepare("SELECT contactID, firstName, lastName, phone, email, userId 
+									FROM Contacts 
+									WHERE userId = ?");
+			$stmt->bind_param("i", $userId);
+			$stmt->execute();
+			$result = $stmt->get_result();
+
+			$resultsArray = [];
+			while($row = $result->fetch_assoc()) 
+			{
+				$resultsArray[] = [
+					"id" => $row["contactID"],
+					"firstName" => $row["firstName"],
+					"lastName" => $row["lastName"],
+					"phone" => $row["phone"],
+					"email" => $row["email"],
+					"userId" => $row["userId"]
+				];
+			}
+
+			if (count($resultsArray) === 0) 
+			{
+				returnWithInfo([]);
+			} 
+			else 
+			{
+				returnWithInfo($resultsArray);
+			}
+
+			$stmt->close();
 			$conn->close();
 			exit;
 		}

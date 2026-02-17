@@ -1,72 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacts</title>
+	<title>Contacts</title>
 	<link href="css/main.css" rel="stylesheet">
-    <script type="text/javascript" src="js/code.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+	<script type="text/javascript" src="js/code.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
-<body>
-    <header>
-        <h1>Team 16</h1>
-        <span style="color:#9cc7d7" id="userName"></span><br />
-    </header>
 
-    <div class="body-container">
-    <div class="nav">
-        <a class="active" href="contacts.html">Contacts</a> 
-        <a href="about.html">About Us</a>
-        <button type="button" id="logoutButton" class="sidebuttons font" onclick="doLogout();">Logout</button>
-    </div>
+<body onload="readCookie()">
+	<header>
+		<h1>Team 16</h1>
+		<span style="color:#9cc7d7" id="userName"></span><br />
+	</header>
 
-    
-    
-	<!-- page content-->
-	<div class="content">
-		<div class="accessUIDiv">
-			<br />
-			<div class="column">
-				<div class="search-container">
-					<input onkeyup=searchContacts() type="text" name="search" id="searchText" placeholder="Search..."
-						class="search-input">
-					<a href="#" class="search-btn" type="button" id="searchContactButton" class="buttons font"
-						onclick="searchContacts();"><i class="fas fa-search"></i></a>
+	<div class="body-container">
+		<div class="nav">
+			<a class="active" href="contacts.html">Contacts</a>
+			<a href="about.html">About Us</a>
+			<button type="button" id="logoutButton" class="sidebuttons font" onclick="doLogout();">Logout</button>
+		</div>
+
+
+
+		<!-- page content-->
+		<div class="content">
+			<div class="accessUIDiv">
+				<br />
+				<div class="column">
+					<div class="search-container">
+						<input onkeyup=searchContacts() type="text" name="search" id="searchText"
+							placeholder="Search..." class="search-input">
+						<a href="#" class="search-btn" type="button" id="searchContactButton" class="buttons font"
+							onclick="searchContacts();"><i class="fas fa-search"></i></a>
+					</div>
+					<input type="text" id="firstName" placeholder="First Name" /><br />
+					<input type="text" id="lastName" placeholder="Last Name" /><br />
+					<input type="text" id="email" placeholder="Email" /><br />
+					<input type="text" id="phone" placeholder="Phone" /><br />
+					<button type="button" id="addContactButton" onclick="addContact();">Add Contact</button><br />
+					<span id="contactAddResult"></span>
 				</div>
-				<input type="text" id="firstName" placeholder="First Name" /><br />
-				<input type="text" id="lastName" placeholder="Last Name" /><br />
-				<input type="text" id="email" placeholder="Email" /><br />
-				<input type="text" id="phone" placeholder="Phone" /><br />
-				<button type="button" id="addContactButton" onclick="addContact();">Add Contact</button><br />
-				<span id="contactAddResult"></span>
+				<div class="column"><button type="button" onclick="searchContacts()"><i class="fa fa-refresh"
+							style="font-size:30px;color:#045b80" aria-hidden="true"></i></button></div>
+				<div class="column"><button type="button" onclick=showTable()> <i class="fas fa-user-plus"
+							style="font-size:27px;color:#045b80"></i></button></div>
 			</div>
-			<div class="column"><button type="button" onclick="searchContacts()"><i class="fa fa-refresh"
-						style="font-size:30px;color:#045b80" aria-hidden="true"></i></button></div>
-			<div class="column"><button type="button" onclick=showTable()> <i class="fas fa-user-plus"
-						style="font-size:27px;color:#045b80"></i></button></div>
-		</div>
-		
-		<!--contact table-->
-		<div class="tables">
-			<div class="tbl-content" id="contactsTable">
-				<table id="contacts" cellpadding="0" cellspacing="0" border="0">
-					<thread>
-						<tr>
-							<th>First&nbspName</th>
-							<th>Last&nbspName</th>
-							<th>Email</th>
-							<th>Phone</th>
-						</tr>
-					</thread>
-					<tbody id="tbody"></tbody>
-				</table>
-			</div>
-		</div>
-	</div>
 
-    <footer>
-        <a href="index.html">Home</a>
-    </footer>
+			<!--contact table-->
+			<div class="tables">
+				<div class="tbl-content" id="contactsTable">
+					<table id="contacts" cellpadding="0" cellspacing="0" border="0">
+						<thread>
+							<tr>
+								<th>First&nbspName</th>
+								<th>Last&nbspName</th>
+								<th>Email</th>
+								<th>Phone</th>
+							</tr>
+						</thread>
+						<tbody id="tbody"></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<footer>
+			<a href="index.html">Home</a>
+		</footer>
 </body>
+
 </html>

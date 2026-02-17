@@ -81,7 +81,8 @@ function readCookie() {
 		window.location.href = "index.html";
 	}
 	else {
-		//		document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
+		document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
+		loadContacts();
 	}
 }
 
@@ -119,6 +120,13 @@ function addContact() {
 				}
 				else {
 					document.getElementById("contactAddResult").innerHTML = "Contact has been added";
+					// Clear the form fields
+					document.getElementById("firstName").value = "";
+					document.getElementById("lastName").value = "";
+					document.getElementById("email").value = "";
+					document.getElementById("phone").value = "";
+					// Refresh the contacts table
+					loadContacts();
 				}
 			}
 		};
@@ -174,5 +182,46 @@ function searchContacts() {
 
 }
 
+function loadContacts() {
+	let tmp = { search: "", userId: userId };
+	let jsonPayload = JSON.stringify(tmp);
+
+	let url = urlBase + '/SearchContacts.' + extension;
+
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try {
+		xhr.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+				let jsonObject = JSON.parse(xhr.responseText);
+
+				let tbody = document.getElementById("tbody");
+				tbody.innerHTML = "";
+
+				if (jsonObject.results && jsonObject.results.length > 0) {
+					for (let i = 0; i < jsonObject.results.length; i++) {
+						let row = tbody.insertRow(i);
+						let firstName = row.insertCell(0);
+						let lastName = row.insertCell(1);
+						let email = row.insertCell(2);
+						let phone = row.insertCell(3);
+
+						firstName.innerHTML = jsonObject.results[i].firstName;
+						lastName.innerHTML = jsonObject.results[i].lastName;
+						email.innerHTML = jsonObject.results[i].email;
+						phone.innerHTML = jsonObject.results[i].phone;
+					}
+				}
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch (err) {
+		console.error("Error loading contacts: " + err.message);
+	}
+}
+
 function showTable() {
+	loadContacts();
 }

@@ -72,38 +72,16 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-function doSignup(event)
+function doSignup() 
 {
-    event.preventDefault();
+    let firstName = document.getElementById("signupFirstName").value;
+    let lastName = document.getElementById("signupLastName").value;
+    let login = document.getElementById("signupLogin").value;
+    let password = document.getElementById("signupPassword").value;
 
-    let firstName = document.getElementById("signupFirstName").value.trim();
-    let lastName  = document.getElementById("signupLastName").value.trim();
-    let login     = document.getElementById("signupLogin").value.trim();
-    let password  = document.getElementById("signupPassword").value;
+    document.getElementById("signupResult").innerHTML = "";
 
-    let resultEl  = document.getElementById("signupResult");
-    resultEl.style.color = "red";
-    resultEl.innerHTML = "";
-
-    // Client-side validation
-    if (!firstName || !lastName) {
-        resultEl.innerHTML = "First and last name are required.";
-        return;
-    }
-
-    const usernamePattern = /^(?=.*[a-zA-Z])[a-zA-Z0-9\-_]{3,18}$/;
-    if (!usernamePattern.test(login)) {
-        resultEl.innerHTML = "Invalid username. Must be 3–18 chars and include at least one letter.";
-        return;
-    }
-
-    const passwordPattern = /^(?=.*\d)(?=.*[A-Za-z])(?=.*[!@#$%^&*]).{8,32}$/;
-    if (!passwordPattern.test(password)) {
-        resultEl.innerHTML = "Invalid password. Must be 8–32 chars with at least one letter, number, and special character.";
-        return;
-    }
-
-    let tmp = { firstName: firstName, lastName: lastName, login: login, password: password };
+    let tmp = {firstName:firstName, lastName:lastName, login:login, password:password};
     let jsonPayload = JSON.stringify(tmp);
 
     let url = urlBase + '/SignUp.' + extension;
@@ -116,24 +94,24 @@ function doSignup(event)
     {
         xhr.onreadystatechange = function()
         {
-            if (this.readyState == 4 && this.status == 200)
+            if(this.readyState == 4 && this.status == 200)
             {
                 let jsonObject = JSON.parse(xhr.responseText);
 
-                if (jsonObject.error && jsonObject.error !== "")
+                if(jsonObject.error && jsonObject.error !== "")
                 {
-                    resultEl.innerHTML = jsonObject.error;
+                    document.getElementById("signupResult").innerHTML = jsonObject.error;
                 }
                 else
                 {
                     // Sign-up successful
-                    userId    = jsonObject.userId;
+                    userId = jsonObject.userId;
                     firstName = jsonObject.firstName;
-                    lastName  = jsonObject.lastName;
+                    lastName = jsonObject.lastName;
 
                     saveCookie();
-                    resultEl.style.color = "green";
-                    resultEl.innerHTML = "Sign-up successful! Redirecting...";
+                    document.getElementById("signupResult").style.color = "green";
+                    document.getElementById("signupResult").innerHTML = "Sign-up successful! Redirecting...";
 
                     setTimeout(() => { window.location.href = "contacts.html"; }, 1000);
                 }
@@ -141,9 +119,9 @@ function doSignup(event)
         };
         xhr.send(jsonPayload);
     }
-    catch (err)
+    catch(err)
     {
-        resultEl.innerHTML = err.message;
+        document.getElementById("signupResult").innerHTML = err.message;
     }
 }
 
@@ -461,6 +439,7 @@ function loadContacts() {
         console.error("Error loading contacts: " + err.message);
     }
 }
+
 function showTable() {
 	loadContacts();
 }

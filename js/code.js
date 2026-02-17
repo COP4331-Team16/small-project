@@ -252,6 +252,11 @@ function doSignup()
 function editContact(contactId) {
     readCookie();
 
+    // Ask for confirmation before editing
+    if (!confirm("Are you sure you want to save these changes to this contact?")) {
+        return; 
+    }
+
     let firstName = document.getElementById("firstName").value;
     let lastName = document.getElementById("lastName").value;
     let email = document.getElementById("email").value;
@@ -275,28 +280,36 @@ function editContact(contactId) {
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
-    xhr.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            let jsonObject = JSON.parse(xhr.responseText);
+    try {
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                try {
+                    let jsonObject = JSON.parse(xhr.responseText);
 
-            if (!jsonObject.success) {
-                document.getElementById("contactAddResult").innerHTML = jsonObject.error;
-            } else {
-                document.getElementById("contactAddResult").innerHTML = "Contact updated successfully";
+                    if (!jsonObject.success) {
+                        document.getElementById("contactAddResult").innerHTML = jsonObject.error;
+                    } else {
+                        document.getElementById("contactAddResult").innerHTML = "Contact updated successfully";
 
-                // Clear form fields
-                document.getElementById("firstName").value = "";
-                document.getElementById("lastName").value = "";
-                document.getElementById("email").value = "";
-                document.getElementById("phone").value = "";
+                        // Clear form fields
+                        document.getElementById("firstName").value = "";
+                        document.getElementById("lastName").value = "";
+                        document.getElementById("email").value = "";
+                        document.getElementById("phone").value = "";
 
-                // Refresh table
-                loadContacts();
+                        // Refresh table
+                        loadContacts();
+                    }
+                } catch (err) {
+                    document.getElementById("contactAddResult").innerHTML = err.message;
+                }
             }
-        }
-    };
+        };
 
-    xhr.send(jsonPayload);
+        xhr.send(jsonPayload);
+    } catch (err) {
+        document.getElementById("contactAddResult").innerHTML = err.message;
+    }
 }
 
 

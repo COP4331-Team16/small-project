@@ -249,3 +249,55 @@ function doSignup()
     }
 }
 
+function editContact(contactId) {
+    readCookie();
+
+    let firstName = document.getElementById("firstName").value;
+    let lastName = document.getElementById("lastName").value;
+    let email = document.getElementById("email").value;
+    let phone = document.getElementById("phone").value;
+
+    document.getElementById("contactAddResult").innerHTML = "";
+
+    let tmp = {
+        contactId: contactId,
+        userId: userId,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone
+    };
+
+    let jsonPayload = JSON.stringify(tmp);
+    let url = urlBase + '/EditContact.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let jsonObject = JSON.parse(xhr.responseText);
+
+            if (!jsonObject.success) {
+                document.getElementById("contactAddResult").innerHTML = jsonObject.error;
+            } else {
+                document.getElementById("contactAddResult").innerHTML = "Contact updated successfully";
+
+                // Clear form fields
+                document.getElementById("firstName").value = "";
+                document.getElementById("lastName").value = "";
+                document.getElementById("email").value = "";
+                document.getElementById("phone").value = "";
+
+                // Refresh table
+                loadContacts();
+            }
+        }
+    };
+
+    xhr.send(jsonPayload);
+}
+
+
+

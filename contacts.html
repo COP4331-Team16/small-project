@@ -29,19 +29,23 @@
 			<div class="accessUIDiv">
 				<br />
 				<div class="column">
-					<div style="display: flex; align-items: center; gap: 8px;">
+					<div style="display: flex; align-items: center; justify-content: center; gap: 12px;">
 						<div class="search-container">
-							<input onkeyup="searchContacts()" type="text" name="search" id="searchText" placeholder="Search..." class="search-input">
-							<a href="#" class="search-btn" type="button" id="searchContactButton" class="buttons font" onclick="searchContacts();"><i class="fas fa-search"></i></a>
+							<input onkeyup="searchContacts()" type="text" name="search" id="searchText"
+								placeholder="Search contacts..." class="search-input">
+							<a href="#" class="search-btn" id="searchContactButton"
+								onclick="searchContacts(); return false;"><i class="fas fa-search"></i></a>
 						</div>
-						<button type="button" onclick="toggleAddContactForm()" aria-label="Add new contact">
-							<i class="fas fa-user-plus" style="font-size:27px;color:#045b80"></i>
+						<button type="button" class="action-btn" onclick="toggleAddContactForm()"
+							aria-label="Add contact">
+							<i class="fas fa-user-plus"></i>
 						</button>
-						<button type="button" onclick="searchContacts()" aria-label="Refresh contacts">
-							<i class="fa fa-refresh" style="font-size:30px;color:#045b80" aria-hidden="true"></i>
+						<button type="button" class="action-btn refresh-btn" onclick="searchContacts()"
+							aria-label="Refresh">
+							<i class="fa fa-refresh" aria-hidden="true"></i>
 						</button>
 					</div>
-					
+
 					<!-- Add Contact Form - Hidden by default -->
 					<div id="addContactForm" style="display: none; margin-top: 20px;">
 						<label for="firstName">First Name</label>
@@ -52,43 +56,46 @@
 						<input type="text" id="email" placeholder="Email" /><br />
 						<label for="phone">Phone</label>
 						<input type="text" id="phone" placeholder="Phone" /><br />
-						<button type="button" id="submitContactButton" class="buttons" onclick="addContact();">Submit Contact</button>
-						<button type="button" id="cancelContactButton" class="buttons" onclick="toggleAddContactForm();">Cancel</button><br />
+						<button type="button" id="submitContactButton" class="buttons" onclick="addContact();">Submit
+							Contact</button>
+						<button type="button" id="cancelContactButton" class="buttons"
+							onclick="toggleAddContactForm();">Cancel</button><br />
 						<span id="contactAddResult"></span>
 					</div>
-			</div>
+				</div>
 
-			<!--contact table-->
-			<div class="tables">
-				<div id="contactDeleteResult" style="color: red; margin: 0 0 15px 0; text-align: center; font-weight: bold;"></div>
-				<div class="tbl-content" id="contactsTable">
-					<table id="contacts" cellpadding="0" cellspacing="0" border="0">
-						<colgroup>
-							<col style="width: 150px;"> <!-- First Name -->
-							<col style="width: 150px;"> <!-- Last Name -->
-							<col style="width: 250px;"> <!-- Email -->
-							<col style="width: 150px;"> <!-- Phone -->
-							<col style="width: 115px;"> <!-- Actions -->
-						</colgroup>
-						<thead>
-							<tr>
-								<th>First Name</th>
-								<th>Last Name</th>
-								<th>Email</th>
-								<th>Phone</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody id="tbody"></tbody>
-					</table>
+				<!--contact table-->
+				<div class="tables">
+					<div id="contactDeleteResult"
+						style="color: red; margin: 0 0 15px 0; text-align: center; font-weight: bold;"></div>
+					<div class="tbl-content" id="contactsTable">
+						<table id="contacts" cellpadding="0" cellspacing="0" border="0">
+							<colgroup>
+								<col style="width: 150px;"> <!-- First Name -->
+								<col style="width: 150px;"> <!-- Last Name -->
+								<col style="width: 250px;"> <!-- Email -->
+								<col style="width: 150px;"> <!-- Phone -->
+								<col style="width: 115px;"> <!-- Actions -->
+							</colgroup>
+							<thead>
+								<tr>
+									<th>First Name</th>
+									<th>Last Name</th>
+									<th>Email</th>
+									<th>Phone</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody id="tbody"></tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<footer>
-		<p>&copy; 2026 Contact Manager. All rights reserved.</p>
-	</footer>
+		<footer>
+			<p>&copy; 2026 Contact Manager. All rights reserved.</p>
+		</footer>
 </body>
 
 </html>

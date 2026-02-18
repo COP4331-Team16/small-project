@@ -50,7 +50,7 @@ p
 {
    font-size: 16px;              /* Base size */
     font-family: 'Ubuntu', sans-serif;
-    color: #666666;               /* Light gray for readability */
+    color: #c0c0c0;               /* Light gray for readability */
     line-height: 1.6;             /* Comfortable reading spacing */
     margin: 0;
     letter-spacing: 0.3px;
@@ -136,26 +136,6 @@ footer a:visited {
 }
 
 
-
-
-
-.addContacts {
-    align-self: center;
-}
-
-#contacts td input {
-    border-radius: 17px;
-    font-family: 'Arial';
-    outline: 0;
-    background: #dfd7b3;
-    width: 100%;
-    border: 0;
-    margin: 0 0 15px;
-    padding: 10px;
-    box-sizing: border-box;
-    font-size: 14px;
-}
-
 /* search bar formatting */
 .search-container {
     background: #ffffff;
@@ -239,14 +219,6 @@ table {
     color: #045b80;
 }
 
-
-/* Container for buttons inside a table cell */
-.table-btn-container {
-    display: flex;          /* keep buttons side by side */
-    justify-content: flex-start; /* align left, or use center/right */
-    align-items: center; 
-}
-
 /* Common table button styles */
 .table-btn {
     padding: 3px 6px;        /* smaller padding */
@@ -258,28 +230,131 @@ table {
     display: inline-block;
 }
 
+/* Container for buttons inside a table cell */
+.table-btn-container {
+    display: flex;               /* lay buttons out side by side */
+    justify-content: center;     /* center them horizontally in the cell */
+    align-items: center;         /* center them vertically in the cell */
+    gap: 8px;                    /* add even space between the buttons */
+}
+
 /* Edit button styles */
 .edit-btn {
-    background-color: #4CAF50; /* green */
-    color: white;
+    background-color: #9cc7d7;
+    color: #045b80;
 }
 
 .edit-btn:hover {
-    background-color: #45a049; /* darker green */
+    background-color: #7ab3c8;
 }
 
 /* Delete button styles */
 .delete-btn {
-    background-color: #f44336; /* red */
-    color: white;
+    background-color: #9cc7d7;
+    color: #045b80;
 }
 
 .delete-btn:hover {
-    background-color: #d32f2f; /* darker red */
+    background-color: #c0392b;
+    color: #ffffff;
 }
 
 
 
+.addContacts {
+    align-self: center;
+}
+
+#contacts td input {
+    border-radius: 17px;
+    font-family: 'Arial';
+    outline: 0;
+    background: #dfd7b3;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* Add Contact Form Card */
+#addContactForm {
+    background-color: #dfd7b3;
+    border: 2px solid #045b80;
+    border-radius: 10px;
+    padding: 20px 28px 16px 28px;
+    margin: 16px auto 0 auto;
+    width: 420px;
+    box-shadow: 0 4px 12px rgba(4, 91, 128, 0.25);
+    text-align: left;
+}
+
+#addContactForm label {
+    display: block;
+    font-family: 'Arial', sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    color: #045b80;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#addContactForm input[type="text"] {
+    width: 100%;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    border: 1.5px solid #9cc7d7;
+    border-radius: 6px;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    color: #045b80;
+    background-color: #f5f1e4;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#addContactForm input[type="text"]:focus {
+    border-color: #045b80;
+    background-color: #ffffff;
+}
+
+#addContactForm .buttons {
+    background-color: #045b80;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right: 8px;
+    margin-top: 4px;
+    transition: background-color 0.2s;
+}
+
+#addContactForm .buttons:hover {
+    background-color: #033f5a;
+}
+
+#addContactForm #cancelContactButton {
+    background-color: #9cc7d7;
+    color: #045b80;
+}
+
+#addContactForm #cancelContactButton:hover {
+    background-color: #7ab3c8;
+}
+
+#addContactForm #contactAddResult {
+    display: block;
+    margin-top: 10px;
+    font-family: 'Arial', sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+}
 
 /* About Page Styles */
 .about-page .Team {

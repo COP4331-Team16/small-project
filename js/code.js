@@ -218,8 +218,9 @@ function toggleAddContactForm() {
         // Show the form
         form.style.display = "block";
     } else {
-        // Hide the form
+        // Hide the form and reset it back to "add" mode
         form.style.display = "none";
+        resetContactForm();
     }
 }
 
@@ -406,7 +407,7 @@ function loadContacts() {
 
                         // Edit button
                         let editBtn = document.createElement("button");
-                        editBtn.innerText = "Edit";
+                        editBtn.innerHTML = '<i class="fas fa-pencil-alt"></i>';
                         editBtn.className = "table-btn edit-btn";
                         editBtn.onclick = function () {
                             document.getElementById("firstName").value = contact.firstName;
@@ -422,12 +423,14 @@ function loadContacts() {
 
                         // Delete button
                         let deleteBtn = document.createElement("button");
-                        deleteBtn.innerText = "Delete";
+                        deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
                         deleteBtn.className = "table-btn delete-btn";
                         deleteBtn.onclick = function () {
                             deleteContact(contact.id);  // Changed to id
                         };
 
+                        let btnContainer = document.createElement("div");  // create a wrapper div for the buttons
+                        btnContainer.className = "table-btn-container"; 
                         actionsCell.appendChild(editBtn);
                         actionsCell.appendChild(deleteBtn);
                     }
